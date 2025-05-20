@@ -1,0 +1,4 @@
+C:/Projects/ChessNNUE/build/CMakeFiles/ALL_BUILD.dir
+C:/Projects/ChessNNUE/build/CMakeFiles/ZERO_CHECK.dir
+C:/Projects/ChessNNUE/build/engine/CMakeFiles/engine.dir
+C:/Projects/ChessNNUE/build/engine/CMakeFiles/ALL_BUILD.dir
