@@ -2,10 +2,10 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Projects\ChessNNUE\build\x64\Release\ZERO_CHECK</FullPath>
+      <FullPath>C:\Projects\ChessNNUE1\build\x64\Release\ZERO_CHECK</FullPath>
     </ProjectOutput>
     <ProjectOutput>
-      <FullPath>C:\Projects\ChessNNUE\build\engine\Release\engine.exe</FullPath>
+      <FullPath>C:\Projects\ChessNNUE1\build\engine\Release\engine.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

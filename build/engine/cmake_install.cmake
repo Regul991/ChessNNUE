@@ -1,4 +1,4 @@
-# Install script for directory: C:/Projects/ChessNNUE/engine
+# Install script for directory: C:/Projects/ChessNNUE1/engine
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

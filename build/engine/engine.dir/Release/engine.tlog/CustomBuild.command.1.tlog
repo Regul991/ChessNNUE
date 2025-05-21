@@ -1,6 +1,6 @@
-^C:\PROJECTS\CHESSNNUE\ENGINE\CMAKELISTS.TXT
+^C:\PROJECTS\CHESSNNUE1\ENGINE\CMAKELISTS.TXT
 setlocal
-"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Projects/ChessNNUE -BC:/Projects/ChessNNUE/build --check-stamp-file C:/Projects/ChessNNUE/build/engine/CMakeFiles/generate.stamp
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Projects/ChessNNUE1 -BC:/Projects/ChessNNUE1/build --check-stamp-file C:/Projects/ChessNNUE1/build/engine/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone

@@ -35,9 +35,29 @@ static int quiescence(Position& pos, int alpha, int beta)
     return alpha;
 }
 
+static constexpr int NULL_MOVE_REDUCTION = 2;
+
 /* ---------------- АЛЬФА-БЕТА ---------------- */
 static int alphabeta(Position& pos, int depth, int alpha, int beta)
 {
+
+    // 0) Null-move-отсечение
+    if (depth >= NULL_MOVE_REDUCTION + 1) {
+        // получаем квадрат короля для стороны to-move
+        Square kingSq = Square(lsb_index(pos.bb[pos.stm][KING]));
+        // только если король не под атакой
+        if (!pos.attacked(kingSq, Side(1 - pos.stm))) {
+            Position nullPos = pos;
+            nullPos.stm = Side(1 - pos.stm);
+            nullPos.ep = SQ_NONE;
+            int score = -alphabeta(nullPos,
+                depth - 1 - NULL_MOVE_REDUCTION,
+                -beta, -beta + 1);
+            if (score >= beta)
+                return beta;
+        }
+    }
+
     /* ---- TT probe ---- */
     uint64_t key = Zobrist::hash(pos);
     TT::Entry& e = TT::probe(key);
