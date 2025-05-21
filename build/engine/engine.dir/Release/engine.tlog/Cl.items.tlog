@@ -1,6 +1,0 @@
-C:\Projects\ChessNNUE1\engine\main.cpp;C:\Projects\ChessNNUE1\build\engine\engine.dir\Release\main.obj
-C:\Projects\ChessNNUE1\engine\bitboard.cpp;C:\Projects\ChessNNUE1\build\engine\engine.dir\Release\bitboard.obj
-C:\Projects\ChessNNUE1\engine\position.cpp;C:\Projects\ChessNNUE1\build\engine\engine.dir\Release\position.obj
-C:\Projects\ChessNNUE1\engine\movegen.cpp;C:\Projects\ChessNNUE1\build\engine\engine.dir\Release\movegen.obj
-C:\Projects\ChessNNUE1\engine\search.cpp;C:\Projects\ChessNNUE1\build\engine\engine.dir\Release\search.obj
-C:\Projects\ChessNNUE1\engine\zobrist.cpp;C:\Projects\ChessNNUE1\build\engine\engine.dir\Release\zobrist.obj
