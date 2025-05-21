@@ -1,7 +1,10 @@
-cmake_minimum_required(VERSION 3.17)
-project(ChessNNUE LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.14)
+project(MyNNUEEngine LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# ----------------------------------------------------------------------------
+# ПЕРЕКЛЮЧАТЕЛЬ: собирать NNUE-cpp сейчас? OFF = оставляем на потом
+# ----------------------------------------------------------------------------
+option(WITH_NNUE "Compile built-in NNUE sources" OFF)
 
-add_subdirectory(engine)        # только движок; GUI добавим позже
+# Указываем поддиректорию движка
+add_subdirectory(engine)

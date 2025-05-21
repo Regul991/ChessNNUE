@@ -1,10 +1,4 @@
-project(MyNNUEEngine LANGUAGES CXX)
-
-# ----------------------------------------------------------------------------
-# ПЕРЕКЛЮЧАТЕЛЬ: собирать NNUE-cpp сейчас?  OFF = оставляем на потом
-# ----------------------------------------------------------------------------
-option(WITH_NNUE "Compile built-in NNUE sources" OFF)
-
+# CMakeLists.txt — внутри папки engine/
 set(SRCS
     main.cpp
     bitboard.cpp
@@ -21,13 +15,17 @@ endif()
 
 add_executable(engine ${SRCS})
 
+# Добавить директорию nnue в инклуды (если она существует)
 target_include_directories(engine PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/nnue)
 
+# Оптимизации
 if (MSVC)
     target_compile_options(engine PRIVATE /O2 /arch:AVX2)
 else()
     target_compile_options(engine PRIVATE -O3 -mavx2 -march=native)
 endif()
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set_target_properties(engine PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+)

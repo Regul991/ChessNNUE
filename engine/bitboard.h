@@ -2,7 +2,7 @@
 #include "types.h"
 #include <array>
 
-/* ЧЧЧ ‘айловые/ранговые маски, нужны в разных модул€х ЧЧЧ */
+/* ЧЧЧ ‘айловые/ранговые маски, !!!Ќ≈ “–ќ√ј“№ ѕќ ј –јЅќ“ј≈“!!! ЧЧЧ */                           /*если будет ошибка в avx - смотреть сюда*/
 inline constexpr Bitboard FILE_A = 0x0101010101010101ULL;
 inline constexpr Bitboard FILE_H = 0x8080808080808080ULL;
 inline constexpr Bitboard RANK_1 = 0x00000000000000FFULL;

@@ -100,3 +100,7 @@ inline int material_score(const Position& pos) {
     }
     return (pos.stm == WHITE) ? s : -s;
 }
+
+inline int evaluate(const Position& pos) {
+    return material_score(pos);  // пока что
+}

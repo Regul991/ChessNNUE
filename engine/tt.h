@@ -2,7 +2,7 @@
 #include "move.h"
 #include <cstdint>
 
-namespace TT {
+namespace TT {                                                  // РАЗОБРАТЬСЯ ТУТ ЧЕТА НЕ ТАК      #TODO
 
     enum Flag : uint8_t { EXACT, LOWER, UPPER };
 
@@ -14,7 +14,7 @@ namespace TT {
         Move     best = 0;
     };
 
-    constexpr size_t SIZE = 1 << 20;              // 1 М слотов ≈ 8 МБ
+    constexpr size_t SIZE = 1 << 20;              // 1 М слотов примерно 8 МБ
     inline Entry table[SIZE];
 
     inline Entry& probe(uint64_t key) { return table[key & (SIZE - 1)]; }

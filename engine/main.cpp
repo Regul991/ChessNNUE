@@ -10,6 +10,7 @@
 #include "search.h"
 #include "zobrist.h"
 #include "tt.h"
+#include <chrono> 
 
 
 
@@ -61,7 +62,7 @@ static uint64_t perft(Position& pos, int depth)
 
 /* --------------------------------------------------------
  *  Применяем список ходов в UCI-формате к позиции
- *  (предполагаем, что ходы легальны — GUI отвечает за это).
+ *  (ходы легальны — GUI отвечает за это)
  * --------------------------------------------------------*/
 static void apply_move_list(Position& pos, std::istream& in)
 {
@@ -121,7 +122,7 @@ int main()
 
     Position pos;
     pos.set_startpos();          // текущая позиция
-    TT::table[0] = {};           // просто «будоражим» таблицу, она inline
+    TT::table[0] = {};           //  она inline ??   *!!!19.05 ПОСМОТРЕТЬ ПРАВИЛЬНОСТЬ ТТ!!!*
 
     std::string token;
     while (std::cin >> token)
@@ -196,27 +197,41 @@ int main()
         /* ---------- поиск ---------- */
         if (token == "go")
         {
-            int depth = 4;          // значение по умолчанию
+            // 1) Считываем остаток строки командой getline
+            std::string line;
+            std::getline(std::cin, line);
+            std::istringstream ss(line);
+
+            // 2) Парсим depth / movetime / wtime / btime (пока без movetime/wtime/btime)                                       #TODO
+            int depth = 4;           // значение по умолчанию
             std::string sub;
-            while (std::cin >> sub) {
+            while (ss >> sub) {
                 if (sub == "depth") {
-                    std::cin >> depth;
+                    ss >> depth;
                 }
                 else if (sub == "movetime" || sub == "wtime" || sub == "btime") {
-                    // эти параметры пока игнорируем
-                    int skip; std::cin >> skip;
+                    int skip; ss >> skip;
+                    // todo здесь можно запомнить time-control                                                                  #TODO
                 }
-                else {
-                    // дошли до конца строки
-                    if (sub != "infinite") {
-                        // sub уже относится к следующей команде → вернуть в поток
-                        std::cin.putback('\n');
-                        for (int i = sub.size() - 1; i >= 0; --i) std::cin.putback(sub[i]);
-                    }
-                    break;
-                }
+                // todo когда нить добавить обработку "infinite" и др                                                           #TODO
             }
+
+            // 3) Запускаем поиск ровно один раз под таймером
+            auto t0 = std::chrono::high_resolution_clock::now();
             auto res = search(pos, depth);
+            auto t1 = std::chrono::high_resolution_clock::now();
+
+            double sec = std::chrono::duration<double>(t1 - t0).count();
+            uint64_t nps = sec > 0.0
+                ? static_cast<uint64_t>(res.nodes / sec)
+                : res.nodes;
+
+            // 4) Выводим info о глубине, узлах и nps, и затем bestmove
+            std::cout << "info depth " << depth
+                << " nodes " << res.nodes
+                << " nps " << nps
+                << " score cp " << res.score
+                << '\n';
             std::cout << "bestmove " << uci_move(res.best) << '\n';
             continue;
         }

@@ -247,7 +247,7 @@
 
 
 
-// engine/movegen.cpp (полностью переписанный файл с корректной генерацией промоций)
+// engine/movegen.cpp 
 #include "movegen.h"
 #include "bitboard.h"
 #include <cstdlib>   // abs
@@ -384,7 +384,7 @@ static void generate_pseudo(const Position& pos, std::vector<Move>& list)
             push_pawn_move(list, from, to, promo);
         }
     }
-    else /* ---------------- ЧЁРНЫЕ Пешки ---------------- */
+    else /* ---------------- ЧЕРНЫЕ Пешки ---------------- */
     {
         Bitboard oneStep = south(pawns) & empty;
         Bitboard bb = oneStep;
@@ -396,7 +396,7 @@ static void generate_pseudo(const Position& pos, std::vector<Move>& list)
             push_pawn_move(list, from, to, promo);
         }
 
-        /* ---- двойной шаг с 7‑й линии ---- */
+        /* ---- двойной шаг с 7-й линии ---- */
         Bitboard singleB = oneStep;
         Bitboard rank5 = 0x000000FF00000000ULL; // 5‑я горизонталь (a5‑h5)
         Bitboard doubleStepB = south(singleB) & empty & rank5;

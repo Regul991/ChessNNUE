@@ -89,7 +89,7 @@ void Position::make_move(Move m, Position& nxt) const
             nxt.occ[them] ^= one(to);
             break;
         }
-    /* --- если съели угловую ладью, гасим соответствующее право рокировки --- */
+    /* --- если съели угловую ладью делитаем право рокировки --- */
     if (to == H1) nxt.cr &= ~WOO;
     else if (to == A1) nxt.cr &= ~WOOO;
     else if (to == H8) nxt.cr &= ~BOO;
@@ -131,15 +131,15 @@ void Position::make_move(Move m, Position& nxt) const
 
     if (pt == PAWN && abs(to - from) == 16)         // двойной шаг
     {
-        Square e = (us == WHITE) ? Square(from + 8)   // поле, через которое «перепрыгнули»
+        Square e = (us == WHITE) ? Square(from + 8)   // поле, через которое перепрыгнули
             : Square(from - 8);
 
         bool can_ep = false;
-        if (us == WHITE) {           // смотрим ЧЁРНЫЕ пешки на d4/f4 против e3 и т.п.
+        if (us == WHITE) {           // смотрим ЧЕРНЫЕ пешки на d4/f4 против e3 и т.п.
             if ((e & 7) != 0 && (nxt.bb[them][PAWN] & one(Square(e + 7)))) can_ep = true;
             if ((e & 7) != 7 && (nxt.bb[them][PAWN] & one(Square(e + 9)))) can_ep = true;
         }
-        else {                       // ходили чёрные: ищем БЕЛЫЕ пешки на d5/f5 против e6
+        else {                       // ходили черные: ищем БЕЛЫЕ пешки на d5/f5 против e6
             if ((e & 7) != 7 && (nxt.bb[them][PAWN] & one(Square(e - 7)))) can_ep = true;
             if ((e & 7) != 0 && (nxt.bb[them][PAWN] & one(Square(e - 9)))) can_ep = true;
         }
@@ -154,12 +154,12 @@ void Position::make_move(Move m, Position& nxt) const
 }
 
 /* ------------------------------------------------------------
- *  position_from_fen – парсер стандартного FEN.
- *  Возвращает true, если парсинг успешен.
+ *  position_from_fen – парсер стандартного FEN
+ *  Возвращает true, если парсинг успешен
  * ------------------------------------------------------------*/
 bool position_from_fen(Position& p, const std::string& fen)
 {
-    Position tmp;  // локальный, чтобы не портить p при ошибке
+    Position tmp;  // локальный
     tmp = Position();  // обнуляем
     for (int c = 0; c < 2; ++c)
         for (int t = 0; t < 6; ++t)
@@ -225,7 +225,7 @@ bool position_from_fen(Position& p, const std::string& fen)
     }
     tmp.occ_all = tmp.occ[WHITE] | tmp.occ[BLACK];
 
-    /* --- всё прошло: копируем во внешнюю позицию --- */
+    /* --- все прошло копируем во внешнюю позицию --- */
     p = tmp;
     return true;
 }

@@ -15,7 +15,7 @@ inline constexpr Square from_sq(Move m) { return Square(m & 0x3F); }
 inline constexpr Square to_sq(Move m) { return Square((m >> 6) & 0x3F); }
 inline constexpr int promo_of(Move m) { return  (m >> 12) & 7; }
 
-// =========== popcount (64-бит) ===========
+// -------------- popcount (64-бит) --------------
 #ifdef _MSC_VER          // MSVC
 #include <intrin.h>
 inline int popcount(Bitboard b) { return (int)__popcnt64(b); }
@@ -23,7 +23,7 @@ inline int popcount(Bitboard b) { return (int)__popcnt64(b); }
 inline int popcount(Bitboard b) { return __builtin_popcountll(b); }
 #endif
 
-// =========== перевод Move → "e2e4" ===========
+// -------------- перевод Move - "e2e4" --------------
 inline std::string uci_move(Move m)
 {
     Square f = from_sq(m), t = to_sq(m);
@@ -44,10 +44,10 @@ inline std::string uci_move(Move m)
 }
 
 /*-------------------------------------------------------------
- *  MVV/LVA — Most Valuable Victim / Least Valuable Attacker
+   MVV/LVA — Most Valuable Victim / Least Valuable Attacker
  *------------------------------------------------------------*/
 inline int mvv_lva_score(PieceType victim, PieceType attacker)
 {
     static constexpr int V[6] = { 100, 320, 330, 500, 900, 20000 }; // K=бесконечность
-    return V[victim] - attacker;   // чем больше, тем «лучше» захват
+    return V[victim] - attacker;   // чем больше тем лучше захват
 }

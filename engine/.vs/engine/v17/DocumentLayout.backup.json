@@ -7,6 +7,14 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:search.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Projects\\ChessNNUE1\\engine\\eval.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:eval.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Projects\\ChessNNUE1\\engine\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Projects\\ChessNNUE1\\engine\\movegen.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:movegen.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -19,10 +27,6 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:bitboard.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Projects\\ChessNNUE1\\engine\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Projects\\ChessNNUE1\\engine\\position.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:position.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -33,10 +37,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Projects\\ChessNNUE1\\engine\\move.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:move.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Projects\\ChessNNUE1\\engine\\eval.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:eval.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Projects\\ChessNNUE1\\engine\\tt.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -85,7 +85,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "bitboard.h",
               "DocumentMoniker": "C:\\Projects\\ChessNNUE1\\engine\\bitboard.h",
               "RelativeDocumentMoniker": "bitboard.h",
@@ -111,7 +111,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "position.cpp",
               "DocumentMoniker": "C:\\Projects\\ChessNNUE1\\engine\\position.cpp",
               "RelativeDocumentMoniker": "position.cpp",
@@ -143,27 +143,27 @@
               "RelativeDocumentMoniker": "search.cpp",
               "ToolTip": "C:\\Projects\\ChessNNUE1\\engine\\search.cpp",
               "RelativeToolTip": "search.cpp",
-              "ViewState": "AgIAAGMAAAAAAAAAAAAgwI8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-05-20T05:17:08.18Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 1,
               "Title": "eval.h",
               "DocumentMoniker": "C:\\Projects\\ChessNNUE1\\engine\\eval.h",
               "RelativeDocumentMoniker": "eval.h",
               "ToolTip": "C:\\Projects\\ChessNNUE1\\engine\\eval.h",
               "RelativeToolTip": "eval.h",
-              "ViewState": "AgIAADwAAAAAAAAAAAAAAEcAAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-05-20T05:14:05.347Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "bitboard.cpp",
               "DocumentMoniker": "C:\\Projects\\ChessNNUE1\\engine\\bitboard.cpp",
               "RelativeDocumentMoniker": "bitboard.cpp",
@@ -176,7 +176,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "position.h",
               "DocumentMoniker": "C:\\Projects\\ChessNNUE1\\engine\\position.h",
               "RelativeDocumentMoniker": "position.h",
@@ -189,7 +189,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "movegen.cpp",
               "DocumentMoniker": "C:\\Projects\\ChessNNUE1\\engine\\movegen.cpp",
               "RelativeDocumentMoniker": "movegen.cpp",
@@ -202,13 +202,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "main.cpp",
               "DocumentMoniker": "C:\\Projects\\ChessNNUE1\\engine\\main.cpp",
               "RelativeDocumentMoniker": "main.cpp",
               "ToolTip": "C:\\Projects\\ChessNNUE1\\engine\\main.cpp",
               "RelativeToolTip": "main.cpp",
-              "ViewState": "AgIAAHIAAAAAAAAAAAAAAIwAAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAANEAAAAAAAAAAAAiwP0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-05-20T03:05:38.789Z",
               "EditorCaption": ""
@@ -228,7 +228,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "move.h",
               "DocumentMoniker": "C:\\Projects\\ChessNNUE1\\engine\\move.h",
               "RelativeDocumentMoniker": "move.h",
