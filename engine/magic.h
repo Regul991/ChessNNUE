@@ -3,7 +3,7 @@
 #include "types.h"    //  там определены Square, Side и тд
 #include "bitboard.h" //  там typedef Bitboard = uint64_t
 
-// public API
+// апи
 void init_magic();
 Bitboard rook_attacks(Square sq, Bitboard occ);
 Bitboard bishop_attacks(Square sq, Bitboard occ);

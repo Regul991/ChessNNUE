@@ -214,7 +214,7 @@ static Bitboard index_to_occ(int index, Bitboard mask) {
 //            if (used[idx] == 0)
 //                used[idx] = ref[i];
 //            else if (used[idx] != ref[i]) {
-//                good = false; //коллизия ес
+//                good = false; //коллизия есть
 //                break;
 //            }
 //        }
