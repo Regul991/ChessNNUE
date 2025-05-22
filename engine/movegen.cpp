@@ -7,6 +7,7 @@
 #include <cstdlib>   // abs
 #include <array>
 #include <vector>
+#include "magic.h"
 
 /* --------------------------------------------------------
  *  Утилиты сдвигов и маски столбцов/рядов
@@ -15,6 +16,7 @@ static inline Bitboard north(Bitboard b) { return b << 8; }
 static inline Bitboard south(Bitboard b) { return b >> 8; }
 static inline Bitboard northtwo(Bitboard b) { return b << 16; }
 static inline Bitboard southtwo(Bitboard b) { return b >> 16; }
+
 
 /* Направления слайдеров */
 static const int DIR_ORTH[4] = { 8, -8, 1, -1 };          // вертикаль/горизонталь
@@ -199,17 +201,40 @@ static void generate_pseudo(const Position& pos, std::vector<Move>& list)
         }
     }
 
-    /* ---------------- Слоны, ладьи, ферзи ---------------- */
+    /* ---------------- Слоны ---------------- */
     Bitboard bishops = pos.bb[us][BISHOP];
-    while (bishops) { Square f = pop_lsb(bishops); push_slider(pos, us, f, DIR_DIAG, list); }
+    while (bishops) {
+        Square from = pop_lsb(bishops);
+        Bitboard attacks = bishop_attacks(from, pos.occ_all) & ~pos.occ[us];
+        while (attacks) {
+            Square to = pop_lsb(attacks);
+            list.push_back(make_move(from, to));
+        }
+    }
+
+    /* ---------------- Ладьи ---------------- */
     Bitboard rooks = pos.bb[us][ROOK];
-    while (rooks) { Square f = pop_lsb(rooks);   push_slider(pos, us, f, DIR_ORTH, list); }
+    while (rooks) {
+        Square from = pop_lsb(rooks);
+        Bitboard attacks = rook_attacks(from, pos.occ_all) & ~pos.occ[us];
+        while (attacks) {
+            Square to = pop_lsb(attacks);
+            list.push_back(make_move(from, to));
+        }
+    }
+
+    /* ---------------- Ферзи ---------------- */
     Bitboard queens = pos.bb[us][QUEEN];
-    while (queens)
-    {
-        Square f = pop_lsb(queens);
-        push_slider(pos, us, f, DIR_DIAG, list);
-        push_slider(pos, us, f, DIR_ORTH, list);
+    while (queens) {
+        Square from = pop_lsb(queens);
+        Bitboard attacks =
+            (bishop_attacks(from, pos.occ_all) |
+                rook_attacks(from, pos.occ_all))
+            & ~pos.occ[us];
+        while (attacks) {
+            Square to = pop_lsb(attacks);
+            list.push_back(make_move(from, to));
+        }
     }
 
     /* ---------------- Король ---------------- */

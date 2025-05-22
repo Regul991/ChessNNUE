@@ -6,6 +6,7 @@ set(SRCS
     movegen.cpp
     search.cpp 
     zobrist.cpp 
+    magic.cpp
 )
 
 if (WITH_NNUE)
