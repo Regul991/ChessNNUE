@@ -52,7 +52,11 @@ install_manifest.txt
 
 *.nnue
 *.bin
-
+.vs/
+*.ipch
+*.db
+*.VC.db
+*.sqlite
 
 .vscode/
 
