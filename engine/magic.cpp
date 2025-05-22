@@ -14,16 +14,17 @@
  *  Вспомогательные inline-утилиты
  * --------------------------------------------------------*/
 static inline int popcount(uint64_t x) {
-    // SWAR-popcount
+    // SWAR-popcount, population_count читает, сколько битов установлено в 1 в 64-битном числе
     x = x - ((x >> 1) & 0x5555555555555555ULL);
     x = (x & 0x3333333333333333ULL) + ((x >> 2) & 0x3333333333333333ULL);
     x = (x + (x >> 4)) & 0x0F0F0F0F0F0F0F0FULL;
     return int((x * 0x0101010101010101ULL) >> 56);
 }
 
-static inline int lsb(uint64_t b) {
+static inline int lsb(uint64_t b) { 
+    // Least Significant Bit - возвращает индекс младшего установленного бита (нужен для перебора маски)
     unsigned long idx;
-    _BitScanForward64(&idx, b);   // гарантируем b ≠ 0
+    _BitScanForward64(&idx, b);   // гарантируем b != 0
     return int(idx);
 }
 
@@ -58,7 +59,7 @@ static Bitboard mask_bishop(Square sq) {
 }
 
 /* --------------------------------------------------------
- *  «На-лету» атаки для генерации таблиц
+ *  флаинг атаки для генерации таблиц
  * --------------------------------------------------------*/
 static Bitboard rook_attack_on_the_fly(Square sq, Bitboard occ) {
     Bitboard a = 0;
@@ -80,7 +81,7 @@ static Bitboard bishop_attack_on_the_fly(Square sq, Bitboard occ) {
 }
 
 /* --------------------------------------------------------
- *  Таблицы и «магии»
+ *  Таблицы и «магия))
  * --------------------------------------------------------*/
 static std::array<uint64_t, 64> RookMagic{}, BishopMagic{};
 static uint8_t RookShift[64]{}, BishopShift[64]{};
@@ -89,7 +90,7 @@ Bitboard RookAttack[64][4096];
 Bitboard BishopAttack[64][512];
 
 /* --------------------------------------------------------
- *  Вспомогательные функции
+ *  вспомогательные функции
  * --------------------------------------------------------*/
 static Bitboard index_to_occ(int index, Bitboard mask) {
     Bitboard occ = 0;
@@ -101,7 +102,7 @@ static Bitboard index_to_occ(int index, Bitboard mask) {
     }
     return occ;
 }
-/*----- Поиск чисел -----*/                                                   /*!!!какое то говно тут!!!*/
+/*----- Поиск чисел -----*/                                                   /*!!!какое то говно тут!!!*/      //#TODO
 static uint64_t find_magic(Square sq, int bits, bool rook) {
     const char* piece = rook ? "Rook" : "Bishop";
     std::mt19937_64 gen(uint64_t(sq) * 918273645ULL + 1234567);
@@ -124,7 +125,7 @@ static uint64_t find_magic(Square sq, int bits, bool rook) {
     while (true) {
         ++tries;
 
-        // отчёт каждые миллион попыток
+        // отчет каждые милльен попыток
         if ((tries & 0xFFFFF) == 0)
             std::cerr << piece << " sq=" << int(sq)
             << " tries=" << tries << "\n";
@@ -134,32 +135,30 @@ static uint64_t find_magic(Square sq, int bits, bool rook) {
             std::cerr << piece << " sq=" << int(sq)
                 << " reached TRY_LIMIT=" << TRY_LIMIT
                 << " Loosening the filter\n";
-            // больше не фильтруем по старшим битам
-            // просто возвращаем первое попавшееся magic
-            // чтобы двигаться дальше и завершить init_magic()
+                //больше не фильтруемм по страшим числам
             return random_u64(gen);
         }
 
         uint64_t magic = random_u64(gen) & random_u64(gen) & random_u64(gen);
 
-        // ОСЛАБЛЁННЫЙ ФИЛЬТР: требуем только минимум 4 старших единицы
+        // !!!ОСЛАБЛЕННЫЙ!!! ФИЛЬТР требуем только минимум 4 старших единицы, чтобы брутфорс отработал до конца (кстати не отработал по итогу)
         if (popcount((magic * mask) & 0xFF00000000000000ULL) < 4)
             continue;
 
         // проверяем на коллизии
         std::vector<Bitboard> used(size, 0);
-        bool good = true;
+        bool good = true; //коллизии нет
         for (int i = 0; i < size; ++i) {
             Bitboard occ = index_to_occ(i, mask);
             int idx = int((occ * magic) >> (64 - bits));
             if (used[idx] == 0)
                 used[idx] = ref[i];
             else if (used[idx] != ref[i]) {
-                good = false;
+                good = false; //коллизия есть
                 break;
             }
         }
-
+        // Если коллизии нет - возвращаем число
         if (good) {
             std::cerr << piece << " sq=" << int(sq)
                 << " magic found after " << tries << " tries\n";
@@ -181,7 +180,7 @@ void init_magic() {
         BishopMask[i] = mask_bishop(sq);
     }
 
-    /* 2) Магии и таблицы */
+    /* 2) Магия))) и таблицы */
     for (int i = 0; i < 64; ++i) {
         Square sq = Square(i);
         int rb = popcount(RookMask[i]);
