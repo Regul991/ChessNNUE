@@ -49,6 +49,7 @@ namespace {
 
 } // namespace
 
+
 /* ------------------------------
    КВИСЕНСИЯ
    ------------------------------*/
@@ -120,6 +121,8 @@ static int alphabeta(Position& pos, int depth, int alpha, int beta, int ply)
         if (score >= beta)
             return beta;
     }
+
+    
 
     /* 4. Генерация и сортировка */
     std::vector<Move> moves;

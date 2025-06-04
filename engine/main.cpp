@@ -11,6 +11,7 @@
 #include "zobrist.h"
 #include "tt.h"
 #include <chrono> 
+#include "magic.h"
 
 
 
@@ -116,6 +117,18 @@ int main()
 {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
+
+    // 1) Сообщаем, что стартуем init_magic()
+    std::cerr << "init_magic() started...\n" << std::flush;
+
+    // 2) Замер времени
+    auto t0 = std::chrono::high_resolution_clock::now();
+    init_magic();
+    auto t1 = std::chrono::high_resolution_clock::now();
+
+    // 3) Выводим результат по завершении
+    double sec = std::chrono::duration<double>(t1 - t0).count();
+    std::cerr << "init_magic() done in " << sec << " sec" << std::endl;
 
     init_attack_tables();
     Zobrist::init();

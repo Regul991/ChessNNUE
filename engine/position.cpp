@@ -2,65 +2,29 @@
 #include "bitboard.h"
 #include "move.h"
 #include <sstream> 
+#include "magic.h"
 
 
 /* атакует ли сторона поле sq? */
-bool Position::attacked(Square sq, Side by) const
-{
-    /* пешки */
+bool Position::attacked(Square sq, Side by) const {
+    // пешки
     if (by == WHITE && (PawnAttB[sq] & bb[WHITE][PAWN])) return true;
     if (by == BLACK && (PawnAttW[sq] & bb[BLACK][PAWN])) return true;
-    /* кони / король из таблиц */
+    // кони / король
     if (KnightAtt[sq] & bb[by][KNIGHT]) return true;
     if (KingAtt[sq] & bb[by][KING])   return true;
 
-    /* слон / ферзь по диагонали */
-    const int diagDir[4] = { 9, 7, -7, -9 };
-    for (int d : diagDir)
-    {
-        int s2 = sq;
-        while (true)
-        {
-            int f = s2 & 7, r = s2 >> 3;
-            if ((d == 9 && (f == 7 || r == 7)) ||
-                (d == 7 && (f == 0 || r == 7)) ||
-                (d == -7 && (f == 7 || r == 0)) ||
-                (d == -9 && (f == 0 || r == 0)))
-                break;
+    Bitboard occ = occ_all;
+    // слон / ферзь по диагонали
+    if (bishop_attacks(sq, occ) & (bb[by][BISHOP] | bb[by][QUEEN]))
+        return true;
+    // ладья / ферзь по прямой
+    if (rook_attacks(sq, occ) & (bb[by][ROOK] | bb[by][QUEEN]))
+        return true;
 
-            s2 += d;
-            Bitboard b = one(Square(s2));
-
-            if (b & occ_all) {
-                if (b & (bb[by][BISHOP] | bb[by][QUEEN])) return true;
-                break;                          // блокирует любая фигура
-            }
-        }
-    }
-
-    /* ладья / ферзь по прямой */
-    const int ortDir[4] = { 8, -8, 1, -1 };
-    for (int d : ortDir)
-    {
-        int s2 = sq;
-        while (true)
-        {
-            int f = s2 & 7, r = s2 >> 3;
-            if ((d == 1 && f == 7) || (d == -1 && f == 0) ||
-                (d == 8 && r == 7) || (d == -8 && r == 0))
-                break;
-
-            s2 += d;
-            Bitboard b = one(Square(s2));
-
-            if (b & occ_all) {
-                if (b & (bb[by][ROOK] | bb[by][QUEEN])) return true;
-                break;
-            }
-        }
-    }
     return false;
 }
+
 
 
 /*---------- применение хода (без «unmake») ----------*/
