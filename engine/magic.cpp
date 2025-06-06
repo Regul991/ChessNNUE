@@ -30,9 +30,6 @@ static inline int lsb(uint64_t b) {
 
 static inline Bitboard one(int sq) { return 1ULL << sq; }
 
-//static Bitboard random_u64(std::mt19937_64& gen) {
-//    return gen() & gen() & gen();
-//}
 
 /* --------------------------------------------------------
  *  Маски лучей

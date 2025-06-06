@@ -142,7 +142,7 @@ int main()
     {
         /* ---------- базовые UCI-команды ---------- */
         if (token == "uci") {
-            std::cout << "id name MyNNUEEngine 0.2\n"
+            std::cout << "id name MyNNUEEngine 0.2.5\n"
                          "id author Danil Skvortsov 83151\n"
                          "uciok\n";
             continue;
