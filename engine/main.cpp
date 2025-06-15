@@ -21,16 +21,16 @@
  * --------------------------------------------------------*/
 static Move uci_to_move(const std::string& s)
 {
-    if (s.length() < 4) return 0;
-    int fromFile = s[0] - 'a';
-    int fromRank = s[1] - '1';
+    if (s.length() < 4) return 0; // Проверка длинны строки минимум 4 символа
+    int fromFile = s[0] - 'a'; // Вычисляем file и rank из символов ASCII a..h → 0..7
+    int fromRank = s[1] - '1'; 
     int toFile   = s[2] - 'a';
     int toRank   = s[3] - '1';
     Square from  = Square(fromFile + 8 * fromRank);
     Square to    = Square(toFile   + 8 * toRank);
 
-    int promo = 0;
-    if (s.length() == 5) {
+    int promo = 0; 
+    if (s.length() == 5) { // Если есть пятый символ, разбираем символ продвижения пешки в promo (N, B, R, Q)
         switch (std::tolower(s[4])) {
         case 'n': promo = KNIGHT; break;
         case 'b': promo = BISHOP; break;
@@ -53,12 +53,13 @@ static uint64_t perft(Position& pos, int depth)
 
     uint64_t nodes = 0;
     Position nxt;
-    for (Move m : list) {
-        pos.make_move(m, nxt);
-        nodes += perft(nxt, depth - 1);
+    for (Move m : list) { // Для каждого хода
+        pos.make_move(m, nxt); // Строит новую позицию
+        nodes += perft(nxt, depth - 1); // Рекурсивно считает глубину
     }
-    return nodes;
-}
+    return nodes; // Возвращает общее число узлов
+} // Важно понимать, что здесь считаются вообще все узлы, без альфа-бета отсечения и тд.
+  // Тест нужен для проверки правильности играемых ходов, а не для их веса. 
 
 
 /* --------------------------------------------------------
@@ -68,7 +69,7 @@ static uint64_t perft(Position& pos, int depth)
 static void apply_move_list(Position& pos, std::istream& in)
 {
     std::string mvStr;
-    while (in >> mvStr) {
+    while (in >> mvStr) { // считаем по токену UCI ходы (e2e4 e7e5...) 
         if (mvStr == "go" || mvStr == "d" || mvStr == "perft" ||
             mvStr == "stop" || mvStr == "quit" || mvStr == "uci" ||
             mvStr == "isready" || mvStr == "position")          // следующий токен
@@ -122,7 +123,7 @@ int main()
     std::cerr << "init_magic() started...\n" << std::flush;
 
     // 2) Замер времени
-    auto t0 = std::chrono::high_resolution_clock::now();
+    auto t0 = std::chrono::high_resolution_clock::now(); 
     init_magic();
     auto t1 = std::chrono::high_resolution_clock::now();
 
@@ -133,7 +134,7 @@ int main()
     init_attack_tables();
     Zobrist::init();
 
-    Position pos;
+    Position pos; // Заполняем таблицы атак (конь, король, пешки) и инициализируем Zobrist-ключи
     pos.set_startpos();          // текущая позиция
     TT::table[0] = {};           //  она inline ??   *!!!19.05 ПОСМОТРЕТЬ ПРАВИЛЬНОСТЬ ТТ!!!*
 

@@ -12,33 +12,34 @@
 /* --------------------------------------------------------
  *  Утилиты сдвигов и маски столбцов/рядов
  * --------------------------------------------------------*/
-static inline Bitboard north(Bitboard b) { return b << 8; }
-static inline Bitboard south(Bitboard b) { return b >> 8; }
-static inline Bitboard northtwo(Bitboard b) { return b << 16; }
-static inline Bitboard southtwo(Bitboard b) { return b >> 16; }
+static inline Bitboard north(Bitboard b) { return b << 8; } // сдвинуть все биты вверх на 1 ранг
+static inline Bitboard south(Bitboard b) { return b >> 8; } // сдвинуть все биты вниз на 1 ранг
+static inline Bitboard northtwo(Bitboard b) { return b << 16; } // вверх на 2 ранга (для двойного шага пешки)
+static inline Bitboard southtwo(Bitboard b) { return b >> 16; } // вниз на 2 ранга
+
 
 
 /* Направления слайдеров */
-static const int DIR_ORTH[4] = { 8, -8, 1, -1 };          // вертикаль/горизонталь
-static const int DIR_DIAG[4] = { 9, 7, -9, -7 };          // диагонали
+static const int DIR_ORTH[4] = { 8, -8, 1, -1 }; // вертикаль/горизонталь 
+static const int DIR_DIAG[4] = { 9, 7, -9, -7 }; // диагонали 
 
 /* --------------------------------------------------------
  *  Вспомогательная функция «толкнуть» слайдер (слон/ладья/ферзь)
  * --------------------------------------------------------*/
-static void push_slider(const Position& pos, Side us, Square from,
-    const int* dirs, std::vector<Move>& list)
+static void push_slider(const Position& pos /*текущая позиция*/, Side us /*чей ход*/, Square from /*откула начинается луч*/,
+    const int* dirs /*указатель на массив направлений*/, std::vector<Move>& list /*куда добавлять ходы*/)
 {
-    Bitboard own = pos.occ[us];
+    Bitboard own = pos.occ[us]; // битборд фигур us
 
-    for (int k = 0; k < 4; ++k)
+    for (int k = 0; k < 4; ++k) 
     {
-        int d = dirs[k];
-        int s = from;
+        int d = dirs[k]; // шаг по индексу квадрата
+        int s = from; // текущий в луче квадрат
 
-        while (true)
+        while (true) 
         {
-            int f = s & 7;          // столбец 0..7
-            int r = s >> 3;         // ряд 0..7
+            int f = s & 7; // столбец 0..7
+            int r = s >> 3; // ряд 0..7
 
             /* Проверяем выход за доску */
             if ((d == 1 && f == 7) || (d == -1 && f == 0) ||
@@ -49,12 +50,12 @@ static void push_slider(const Position& pos, Side us, Square from,
                 (d == 8 && r == 7) || (d == -8 && r == 0))
                 break;
 
-            s += d;
-            Bitboard sq = one(Square(s));
-
+            s += d; // переходим не следующий квадрат в луче
+            Bitboard sq = one(Square(s)); // бит на который перешли 
+             
             if (sq & own) break;            // своя фигура – луч обрывается
 
-            list.push_back(make_move(from, Square(s)));
+            list.push_back(make_move(from, Square(s))); // обычный ход или взятие
 
             if (sq & pos.occ[us ^ 1]) break; // взяли чужую – дальше не идём
         }
@@ -85,45 +86,45 @@ static inline void push_pawn_move(std::vector<Move>& list,
  * --------------------------------------------------------*/
 static void generate_pseudo(const Position& pos, std::vector<Move>& list)
 {
-    list.clear();
-    const Side us = pos.stm;
-    const Side them = Side(us ^ 1);
+    list.clear(); // очищаем входной вектор 
+    const Side us = pos.stm; // текущий игрок black/white
+    const Side them = Side(us ^ 1); // противник
 
     /* ---------------- Пешки ---------------- */
-    Bitboard pawns = pos.bb[us][PAWN];
-    const Bitboard empty = ~pos.occ_all;
+    Bitboard pawns = pos.bb[us][PAWN]; // все пешки нашего цвета
+    const Bitboard empty = ~pos.occ_all; // пустые клетки
 
     if (us == WHITE)
     {
         /* ---- простой шаг вперёд ---- */
-        Bitboard oneStep = north(pawns) & empty;
-        Bitboard bb = oneStep;
+        Bitboard oneStep = north(pawns) & empty; // переместить все пешки вперед но только если пустые клетки
+        Bitboard bb = oneStep; // 
         while (bb)
         {
-            Square to = pop_lsb(bb);
-            Square from = Square(to - 8);
+            Square to = pop_lsb(bb); // извлечь целевой квадрат и удалить бит lsb
+            Square from = Square(to - 8); // исходный квадрат на 8 ниже
             bool promo = (to >> 3) == 7;        // достигли 8‑й горизонтали
-            push_pawn_move(list, from, to, promo);
+            push_pawn_move(list, from, to, promo); // добавляем ход или промоцию (превращшение) 
         }
 
         /* ---- двойной шаг с 2‑й линии ---- */
         Bitboard single = oneStep;               // уже вычислено
         Bitboard rank4 = 0x00000000FF000000ULL; // 4‑я горизонталь (a4‑h4)
-        Bitboard doubleStep = north(single) & empty & rank4;
+        Bitboard doubleStep = north(single) & empty & rank4; // в случае даблстепа 
 
         bb = doubleStep;
         while (bb)
         {
             Square to = pop_lsb(bb);
-            Square from = Square(to - 16);
+            Square from = Square(to - 16); // из двух рядов ниже
             list.push_back(make_move(from, to)); // двойной ход никогда не промоция
         }
 
-        /* ---- захваты влево / вправо ---- */
-        Bitboard capL = (pawns << 7) & pos.occ[them] & ~FILE_H;
-        Bitboard capR = (pawns << 9) & pos.occ[them] & ~FILE_A;
+        /* ---- захваты ---- */
+        Bitboard capL = (pawns << 7) & pos.occ[them] & ~FILE_H; // взятие влево
+        Bitboard capR = (pawns << 9) & pos.occ[them] & ~FILE_A; // взятие вправо
 
-        bb = capL;
+        bb = capL; 
         while (bb)
         {
             Square to = pop_lsb(bb);
@@ -292,17 +293,17 @@ static void generate_pseudo(const Position& pos, std::vector<Move>& list)
 void generate_moves(const Position& pos, std::vector<Move>& legal)
 {
     std::vector<Move> pseudo;
-    generate_pseudo(pos, pseudo);
+    generate_pseudo(pos, pseudo); // сначала собрали все псевдолегальные
 
     legal.clear();
     Position nxt;
     for (Move m : pseudo)
     {
-        pos.make_move(m, nxt);
-        Side us = pos.stm;
-        Square ksq = Square(lsb_index(nxt.bb[us][KING]));
-        if (!nxt.attacked(ksq, nxt.stm))
-            legal.push_back(m);
+        pos.make_move(m, nxt); // делаем ход
+        Side us = pos.stm; // сохраняем сторону чтобы найти короля в nxt
+        Square ksq = Square(lsb_index(nxt.bb[us][KING])); 
+        if (!nxt.attacked(ksq, nxt.stm)) // если после хода король не под шахом
+            legal.push_back(m); // добавляем в список легальных
     }
 }
 

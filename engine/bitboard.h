@@ -9,7 +9,7 @@ inline constexpr Bitboard RANK_1 = 0x00000000000000FFULL;
 inline constexpr Bitboard RANK_8 = 0xFF00000000000000ULL;
 
 /* --- Предвычисленные битборды атак --- */
-extern std::array<Bitboard, 64> KnightAtt;
+extern std::array<Bitboard, 64> KnightAtt; // extern означает, что определям эти массивы в другом файле
 extern std::array<Bitboard, 64> KingAtt;
 extern std::array<Bitboard, 64> PawnAttW;   // белая пешка: захваты
 extern std::array<Bitboard, 64> PawnAttB;   // чёрная пешка: захваты
