@@ -4,10 +4,10 @@
 
 inline int move_score(const Position& pos, Move m)
 {
-    Square to = to_sq(m);
+    Square to = to_sq(m); // извлекаем целевой квадрат
 
     /* захват? */
-    if (pos.occ[pos.stm ^ 1] & one(to))
+    if (pos.occ[pos.stm ^ 1] & one(to)) 
     {
         /* определить нападающую и бьющую фигуры */
         PieceType attacker = NO_PIECE, victim = NO_PIECE;
