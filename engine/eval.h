@@ -1,15 +1,15 @@
-#pragma once
+﻿#pragma once
 #include "position.h"
 #include "move.h" // popcount()
 #include "bitboard.h" 
 /*---------------------------------------------
- *  ��������  +  Piece-Square Tables (PST)
- *  ������������ � ����� �����
+ *  Материал  +  Piece-Square Tables (PST)
+ *  возвращается в сотых пешки
  *--------------------------------------------*/
 
 constexpr int VAL[6] = { 100, 320, 330, 500, 900, 0 };
 
-/*            a1 � h1  �  a8 � h8   (WHITE � �����)          */
+/*            a1 … h1  …  a8 … h8   (WHITE — снизу)          */
 constexpr int PST_PAWN[64] = {
       0,  0,  0,  0,  0,  0,  0,  0,
      50, 60, 70, 80, 80, 70, 60, 50,
@@ -76,21 +76,21 @@ constexpr int PST_KING_MID[64] = {
      20, 30, 10,  0,  0, 10, 30, 20
 };
 
-constexpr const int* PST[6] = {
+constexpr const int* PST[6] = { // Массив указателей на ПСТ таблицы 
     PST_PAWN, PST_KNIGHT, PST_BISHOP, PST_ROOK, PST_QUEEN, PST_KING_MID
 };
 
-constexpr int mirror(int sq) {
-    return sq ^ 56;
+constexpr int mirror(int sq) { // Функция зеркалит квадрат по вертикали
+    return sq ^ 56; // a1 (0) → a8 (56)
 }
 
 inline int material_score(const Position& pos) {
-    int s = 0;
-    for (int pt = 0; pt < 6; ++pt) {
-        Bitboard wb = pos.bb[WHITE][pt];
-        while (wb) {
-            Square sq = pop_lsb(wb);
-            s += VAL[pt] + PST[pt][sq];
+    int s = 0; // Начальная оценка в сотых пешки
+    for (int pt = 0; pt < 6; ++pt) { // Проходим по всем типам фигуры
+        Bitboard wb = pos.bb[WHITE][pt]; // Битборды белых фигур 
+        while (wb) { // Пока есть хотя бы одна белая фигуры 
+            Square sq = pop_lsb(wb); // Достаем и удаляем LSB (самый младший бит) 
+            s += VAL[pt] + PST[pt][sq]; // Материал плюс ПСТ
         }
         Bitboard bb = pos.bb[BLACK][pt];
         while (bb) {
@@ -101,6 +101,6 @@ inline int material_score(const Position& pos) {
     return (pos.stm == WHITE) ? s : -s;
 }
 
-inline int evaluate(const Position& pos) {
-    return material_score(pos);  // ���� ���
+inline int evaluate(const Position& pos) { // ПРосто возвращает оценку материала
+    return material_score(pos);  // пока что, походу не пока что а навсегда...
 }

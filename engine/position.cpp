@@ -30,7 +30,7 @@ bool Position::attacked(Square sq, Side by) const {
 /*---------- применение хода (без «unmake») ----------*/
 void Position::make_move(Move m, Position& nxt) const
 {
-    nxt = *this;                       // копия
+    nxt = *this; // копия
     Square from = from_sq(m);
     Square to = to_sq(m);
     int promo = promo_of(m);

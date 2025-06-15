@@ -1,10 +1,10 @@
 #pragma once
 #include <cstdint>
 
-using Bitboard = uint64_t;
+using Bitboard = uint64_t; // создаем битборд 
 
 /* =====  вадрат =====  (a1 = 0, b1 = 1, Е, h8 = 63) */
-enum Square : int {
+enum Square : int { // —лева направо снизу вверх
     A1, B1, C1, D1, E1, F1, G1, H1,
     A2, B2, C2, D2, E2, F2, G2, H2,
     A3, B3, C3, D3, E3, F3, G3, H3,
@@ -16,7 +16,7 @@ enum Square : int {
     SQ_NONE = 64
 };
 
-inline constexpr Bitboard one(Square s) { return 1ULL << s; }
+inline constexpr Bitboard one(Square s) { return 1ULL << s; } // утилита, возвращающа€ битборд, где установлен ровно один бит в позиции s
 
 /* ===== —торона / фигуры ===== */
 enum Side : int { WHITE = 0, BLACK = 1, NO_SIDE = 2 };

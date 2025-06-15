@@ -5,15 +5,15 @@
 
 using Move = uint32_t;          // 0-15: from, 6-11: to, 12-14: промо-фигура (0 = нет)
 
-enum Promo : int { NO_PR = 0, PRN = KNIGHT, PRB = BISHOP, PRR = ROOK, PRQ = QUEEN };
+enum Promo : int { NO_PR = 0, PRN = KNIGHT, PRB = BISHOP, PRR = ROOK, PRQ = QUEEN }; // определение превращения пешки
 
-constexpr Move make_move(Square from, Square to, int promo = 0)
+constexpr Move make_move(Square from, Square to, int promo = 0) // собираем move из трех полей from to promo
 {
     return (from) | (to << 6) | (promo << 12);
 }
-inline constexpr Square from_sq(Move m) { return Square(m & 0x3F); }
-inline constexpr Square to_sq(Move m) { return Square((m >> 6) & 0x3F); }
-inline constexpr int promo_of(Move m) { return  (m >> 12) & 7; }
+inline constexpr Square from_sq(Move m) { return Square(m & 0x3F); } // исходный квадрта
+inline constexpr Square to_sq(Move m) { return Square((m >> 6) & 0x3F); } // цвелевой квадрат 
+inline constexpr int promo_of(Move m) { return  (m >> 12) & 7; } // превращение или нет 
 
 // -------------- popcount (64-бит) --------------
 #ifdef _MSC_VER          // MSVC
